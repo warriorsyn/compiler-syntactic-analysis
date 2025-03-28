@@ -1,22 +1,37 @@
-﻿var code = "if ( hero  {move_down} else {move_down}";
-var code2 = "while(trap) {move_left}";
-var code3 = "for(hero;enemy;treasure) {move_left}";
-
-var code4 = @"
-// Comentario diferente
-if(hero) {while(trap) {move_left}} else {for(hero;enemy;treasure) {move_left}}  // ola
-
-// Comentario
-";
-
-var lexer = new Lexer.Lexer(code4);
-var tokens = lexer.Tokenize();
-
-var parser = new Lexer.Parser(tokens);
-
-parser.Parse();
-
-foreach (var token in tokens)
+﻿//Fabio, Luiz Gustavo, Daniel Oliveira, Lucas Litieri, João Andrade
+namespace Lexer
 {
-    Console.WriteLine(token);
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter code to tokenize (or -1 to exit):");
+                string input = Console.ReadLine();
+                if (input == "-1")
+                    break;
+
+                try
+                {
+                    var lexer = new Lexer(input);
+                    List<Token> tokens = lexer.Tokenize();
+                    
+                    var parser = new Parser(tokens);
+                    parser.Parse();
+
+                    Console.WriteLine("\nTokens:");
+                    foreach (var token in tokens)
+                    {
+                        Console.WriteLine(token);
+                    }
+                    Console.WriteLine();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message + "\n");
+                }
+            }
+        }
+    }
 }
